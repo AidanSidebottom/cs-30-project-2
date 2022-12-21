@@ -1,29 +1,75 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+  import{ref, computed} from 'vue'
+
+  const area = ref([
+  
+  ['','','','','','','','','',''],
+  ['','','','','','','','','',''],
+  ['','','','','','','','','',''],
+  ['','','','','','','','','',''],
+  ['','','','','','','','','',''],
+  ['','','','','','','','','',''],
+  ['','','','','','','','','',''],
+  ['','','','','','','','','',''],
+  ['','','','','','','','','',''],
+  ['','','','','','','','','',''],
+
+])
+
+const tiles = (x,y)=>{
+if((x+y)%2==0){
+    return 'white';
+  }
+  else{
+    return 'black';
+  }
+}
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+ <main class="area">
+      <div
+        
+        v-for="(row, x) in area"
+        :key="x"
+      >
+        <div 
+          v-for="(cell, y) in row"
+          :key="y"
+          
+          v-bind:class="tiles(x,y)"
+          
+
+        >
+        </div>
+      </div>
+    </main>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+  .area{
+  margin: auto;
+  width: 100%;
+  
+  }
+  .white{
+  display:inline-block;
+  vertical-align:middle;
+  
+  
+  height:20px;
+  width:20px;
+  background-color: rgb(37, 202, 111);
+  padding:10px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.black{
+  display:inline-block;
+  vertical-align:middle;
+  
+  
+  height:20px;
+  width:20px;
+  background-color: rgb(12, 117, 61);
+  padding:10px;
 }
 </style>
