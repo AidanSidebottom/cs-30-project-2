@@ -3,10 +3,10 @@
 
   let currentMove = true;
   
-  const food = {name:"food",color:"red",image:"./assets/apple.png"}
-  const head ={name:"head",color:"blue",image:".assets/apple.png"}
-  const body = {name:"body",color:"blue",image:"b"}
-  const tail ={name:"tail",color:"blue",image:"t"}  
+  const f = {name:"food",color:"red",image:"./assets/apple.png"}
+  const h ={name:"head",color:"blue",image:".assets/apple.png"}
+  const b = {name:"body",color:"blue",image:"b"}
+  const t ={name:"tail",color:"blue",image:"t"}  
 
   const area = ref([
   
@@ -14,7 +14,7 @@
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
-  ['','','',head,'','',food,'','',''],
+  ['',b,b,h,'','',f,'','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
@@ -60,8 +60,16 @@ let start = () =>{
           
           v-bind:class="tiles(x,y)"
         >
-        <div>
-          <img v-bind:src="area[x][y].image">
+        <div v-if="!area[x][y]">
+        </div>
+        <div v-else-if="area[x][y].name==='food'">
+          <img src="./assets/apple.png">
+        </div>
+        <div v-else-if="area[x][y].name==='head'">
+          <img src="./assets/head_right.png">
+        </div>
+        <div v-else-if="area[x][y].name==='body'">
+          <img src="./assets/body_horizontal.png">
         </div>
             
           
