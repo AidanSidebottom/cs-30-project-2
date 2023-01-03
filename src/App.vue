@@ -1,20 +1,19 @@
 <script setup>
   import{ref, computed} from 'vue'
-
   let currentMove = true;
   
-  const f = {name:"food",color:"red",image:"./assets/apple.png"}
-  const h ={name:"head",color:"blue",image:".assets/apple.png"}
-  const b = {name:"body",color:"blue",image:"b"}
-  const t ={name:"tail",color:"blue",image:"t"}  
-
-  const area = ref([
+  const f = {name:"food",color:"red",icon:"../src/assets/apple.png"}
+  const h ={name:"head",color:"blue",icon:"../src/assets/head_down.png"}
+  const b = {name:"body",color:"blue",icon:"../src/assets/body_horizontal.png"}
+  const t ={name:"tail",color:"blue",icon:"../src/assets/tail_down.png"}  
+  
+  let area = ref([
   
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
-  ['',b,b,h,'','',f,'','',''],
+  ['','','','','','',f,'','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
@@ -22,6 +21,8 @@
   ['','','','','','','','','',''],
 
 ])
+
+let snake = [h]
 
 const tiles = (x,y)=>{
 if((x+y)%2==0){
@@ -32,15 +33,22 @@ if((x+y)%2==0){
   }
 }
 
-let rightPeice = () =>{
-area[x][y].value.name==='food'
-}
+let counter = 0
 
 
 let start = () =>{
+  
   alert("the game has started")
+  area.value[counter][1]= f;
+  counter++;
+  setTimeout(move(),1000)
+  
 }
 
+let move = () =>{
+  alert(" moveing the snake ")
+  area.value[4][3]= h;
+}
 
 </script>
 
@@ -57,24 +65,17 @@ let start = () =>{
         <div 
           v-for="(cell, y) in row"
           :key="y"
-          
+          v-on:click=start(x,y)
           v-bind:class="tiles(x,y)"
         >
-        <div v-if="!area[x][y]">
-        </div>
-        <div v-else-if="area[x][y].name==='food'">
-          <img src="./assets/apple.png">
-        </div>
-        <div v-else-if="area[x][y].name==='head'">
-          <img src="./assets/head_right.png">
-        </div>
-        <div v-else-if="area[x][y].name==='body'">
-          <img src="./assets/body_horizontal.png">
-        </div>
+                    
+       <img
+        v-bind:src="area[x][y].icon"
+        v-bind:class="icon"
+        >
             
           
         </div>
-        
       </div>
     </main>
     <button v-on:click=start()>
@@ -114,7 +115,6 @@ let start = () =>{
   padding-bottom: 15px;
   
 }
-.apple{
-  src: "./assets/apple.png";
+.icon{
 }
 </style>
