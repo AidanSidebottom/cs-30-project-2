@@ -1,7 +1,42 @@
 <script setup>
   import{ref, computed} from 'vue'
-  let currentMove = true;
-  
+
+  const directions = [
+
+  {
+    direction: "left",
+    keyCode: 37,
+    move: {
+      x: -1,
+      y: 0
+    }
+  },
+  {
+    direction: "up",
+    keyCode: 38,
+    move: {
+      x: 0,
+      y: -1
+    }
+  },
+  {
+    direction: "right",
+    keyCode: 39,
+    move: {
+      x: 1,
+      y: 0
+    }
+  },
+  {
+    direction: "down",
+    keyCode: 40,
+    move: {
+      x: 0,
+      y: 1
+    }
+  }
+]
+
   const f = {name:"food",color:"red",icon:"../src/assets/apple.png"}
   const h ={name:"head",color:"blue",icon:"../src/assets/head_down.png"}
   const b = {name:"body",color:"blue",icon:"../src/assets/body_horizontal.png"}
@@ -13,7 +48,7 @@
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
-  ['','','','','','',f,'','',''],
+  ['','','',h,'','',f,'','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
@@ -23,6 +58,7 @@
 ])
 
 let snake = [h]
+let direction = right
 
 const tiles = (x,y)=>{
 if((x+y)%2==0){
@@ -33,28 +69,36 @@ if((x+y)%2==0){
   }
 }
 
-let counter = 0
+
+let started = false
+
+let start = (x,y) =>{
+  started=true;
+  setTimeout(move(x,y),1000)
+  }
 
 
-let start = () =>{
+let move = (x,y) => {
   
-  alert("the game has started")
-  area.value[counter][1]= f;
-  counter++;
-  setTimeout(move(),1000)
+  while (started === true) {
   
+  let temp = area.value[x][y]
+  area.value[x][y] === ''
+  area.value[x+1][y+1] === temp
+
+  }
+  start(x,y)
 }
 
-let move = () =>{
-  alert(" moveing the snake ")
-  area.value[4][3]= h;
-}
+
 
 </script>
 
 <template>
   <div class="title">
-    Snake
+    
+    
+    
   </div>
  <main class="area">
       <div
@@ -78,7 +122,7 @@ let move = () =>{
         </div>
       </div>
     </main>
-    <button v-on:click=start()>
+    <button v-on:click=start(3,4)>
       start
     </button>
 </template>
