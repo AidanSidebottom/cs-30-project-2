@@ -1,41 +1,7 @@
 <script setup>
   import{ref, computed} from 'vue'
 
-  const directions = [
-
-  {
-    direction: "left",
-    keyCode: 37,
-    move: {
-      x: -1,
-      y: 0
-    }
-  },
-  {
-    direction: "up",
-    keyCode: 38,
-    move: {
-      x: 0,
-      y: -1
-    }
-  },
-  {
-    direction: "right",
-    keyCode: 39,
-    move: {
-      x: 1,
-      y: 0
-    }
-  },
-  {
-    direction: "down",
-    keyCode: 40,
-    move: {
-      x: 0,
-      y: 1
-    }
-  }
-]
+  
 
   const f = {name:"food",color:"red",icon:"../src/assets/apple.png"}
   const h ={name:"head",color:"blue",icon:"../src/assets/head_down.png"}
@@ -45,7 +11,7 @@
   let area = ref([
   
   ['','','','','','','','','',''],
-  ['','','','','','','','','',''],
+  ['',h,'','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','',h,'','',f,'','',''],
@@ -57,8 +23,10 @@
 
 ])
 
-let snake = [h]
-let direction = right
+let snake = [ {x: 1, y: 1} , ]
+
+
+
 
 const tiles = (x,y)=>{
 if((x+y)%2==0){
@@ -72,23 +40,49 @@ if((x+y)%2==0){
 
 let started = false
 
-let start = (x,y) =>{
+let start = (x,y,direction) =>{
   started=true;
-  setTimeout(move(x,y),1000)
+  move(x,y,direction)
+  alert(snake[0].x)
   }
 
 
-let move = (x,y) => {
+  let move = (x,y,direction) => {
   
   while (started === true) {
   
   let temp = area.value[x][y]
-  area.value[x][y] === ''
-  area.value[x+1][y+1] === temp
+  area.value[x][y] = ''
 
+  if(direction === 1){
+  area.value[x+1][y] = temp
+  return
+  
+    } 
+    if(direction === 2){
+  area.value[x-1][y] = temp
+  return
+  
+    } 
+    if(direction === 3){
+  area.value[x][y+1] = temp
+  return
+  
+    } 
+    if(direction === 4){
+  area.value[x][y-1] = temp
+  return
+  
+    } else{
+      alert("invalid direction")
+      return
+      
+    }
+    
   }
-  start(x,y)
 }
+  
+  
 
 
 
@@ -109,7 +103,6 @@ let move = (x,y) => {
         <div 
           v-for="(cell, y) in row"
           :key="y"
-          v-on:click=start(x,y)
           v-bind:class="tiles(x,y)"
         >
                     
@@ -122,7 +115,7 @@ let move = (x,y) => {
         </div>
       </div>
     </main>
-    <button v-on:click=start(3,4)>
+    <button v-on:click=start(snake[0].x,snake[0].y,1)>
       start
     </button>
 </template>
