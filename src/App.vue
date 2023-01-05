@@ -11,10 +11,10 @@
   let area = ref([
   
   ['','','','','','','','','',''],
-  ['',h,'','','','','','','',''],
   ['','','','','','','','','',''],
-  ['','','','','','','','','',''],
-  ['','','',h,'','',f,'','',''],
+  ['','',b,'','','','','','',''],
+  ['','','',h,'','','','','',''],
+  ['','','','','','',f,'','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
@@ -23,7 +23,7 @@
 
 ])
 
-let snake = [ {x: 1, y: 1} , ]
+let snake = [ {x: 3, y: 3} , {x: 2, y: 2}]
 
 
 
@@ -38,47 +38,60 @@ if((x+y)%2==0){
 }
 
 
+
 let started = false
 
-let start = (x,y,direction) =>{
+let start = (direction) =>{
   started=true;
-  move(x,y,direction)
-  alert(snake[0].x)
+  move(direction)
   }
 
 
-  let move = (x,y,direction) => {
-  
+  let move = (direction) => {
+
+  for (let i = 0; i < snake.length; i++) {
+
+  let x = snake[i].x
+  let y = snake[i].y
+
   while (started === true) {
   
   let temp = area.value[x][y]
-  area.value[x][y] = ''
+  area.value[x][y]= ''
 
   if(direction === 1){
+
   area.value[x+1][y] = temp
+  snake[i].x = snake[i].x+1
   return
-  
-    } 
+    
+  } 
+
     if(direction === 2){
   area.value[x-1][y] = temp
+  snake[0].x = snake[0].x-1
   return
   
-    } 
+  } 
+
     if(direction === 3){
   area.value[x][y+1] = temp
+  snake[0].y = snake[0].y+1
   return
   
-    } 
+  } 
+
     if(direction === 4){
   area.value[x][y-1] = temp
+  snake[0].y = snake[0].y-1
   return
   
     } else{
       alert("invalid direction")
       return
       
-    }
-    
+    } 
+    } 
   }
 }
   
@@ -97,12 +110,12 @@ let start = (x,y,direction) =>{
  <main class="area">
       <div
         
-        v-for="(row, x) in area"
-        :key="x"
+        v-for="(row, y) in area"
+        :key="y"
       >
         <div 
-          v-for="(cell, y) in row"
-          :key="y"
+          v-for="(cell, x) in row"
+          :key="x"
           v-bind:class="tiles(x,y)"
         >
                     
@@ -115,8 +128,17 @@ let start = (x,y,direction) =>{
         </div>
       </div>
     </main>
-    <button v-on:click=start(snake[0].x,snake[0].y,1)>
-      start
+    <button v-on:click=start(1)>
+      right
+    </button>
+    <button v-on:click=start(2)>
+      left
+    </button>
+    <button v-on:click=start(3)>
+      down
+    </button>
+    <button v-on:click=start(4)>
+      up
     </button>
 </template>
 
