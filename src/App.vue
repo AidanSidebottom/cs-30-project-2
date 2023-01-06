@@ -13,8 +13,8 @@
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
-  ['','','','','','','','','',''],
-  ['','','','','','','','','',''],
+  ['','','',h,'','','','','',''],
+  ['','','','',h,'','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
@@ -25,7 +25,14 @@
 
 let snake = [ {x: 4, y: 4} , {x: 3, y: 3}]
 
+let randFood = () =>{
 
+  let x = Math.floor(Math.random()*8)
+  let y = Math.floor(Math.random()*8)
+
+  area.value[x][y]=f
+
+}
 
 
 const tiles = (x,y)=>{
@@ -48,15 +55,14 @@ let start = (direction) =>{
 
 
   let move = (direction) => {
-
+    randFood()
+    
   
-  for (let i = 0; i < snake.length; i++) {
+  for (let i = 0; i <= snake.length; i++) {
 
   let x = snake[i].x
   let y = snake[i].y
 
-  while (started === true) {
-  
   let temp = area.value[x][y]
   area.value[x][y]= ''
 
@@ -85,14 +91,10 @@ let start = (direction) =>{
   snake[0].y = snake[0].y-1
   if(i===snake.length){return}
   
-    } else{
-      alert("invalid direction")
-      return
-      
     } 
     } 
   }
-}
+
   
   
 
@@ -120,7 +122,6 @@ let start = (direction) =>{
                     
        <img
         v-bind:src="area[x][y].icon"
-        v-bind:class="icon"
         >
             
           
