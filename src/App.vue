@@ -59,39 +59,47 @@ let start = (direction) =>{
     
   
   for (let i = 0; i <= snake.length; i++) {
-
+  let lastpos = 0;
   let x = snake[i].x
   let y = snake[i].y
 
   let temp = area.value[x][y]
   area.value[x][y]= ''
 
+    if(i === 0){
   if(direction === 1){
-
+  lastpos= area.value[x][y]
   area.value[x+1][y] = temp
   snake[i].x = snake[i].x+1
-  if(i===snake.length){return}
+  
     
   } 
 
     if(direction === 2){
+  lastpos = area.value[x][y]
   area.value[x-1][y] = temp
   snake[0].x = snake[0].x-1
-  if(i===snake.length){return}
+  
   } 
 
     if(direction === 3){
+  lastpos= area.value[x][y]
   area.value[x][y+1] = temp
   snake[0].y = snake[0].y+1
-  if(i===snake.length){return}
+  
   } 
 
     if(direction === 4){
+  lastpos= area.value[x][y]
   area.value[x][y-1] = temp
   snake[0].y = snake[0].y-1
-  if(i===snake.length){return}
   
-    } 
+    }
+    }else{
+      area[x][y].value = lastpos;
+      if(i===snake.length){return}
+    }
+    
     } 
   }
 
