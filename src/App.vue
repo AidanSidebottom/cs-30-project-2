@@ -1,20 +1,20 @@
 <script setup>
-  import{ref, computed} from 'vue'
+  import{ref, computed, VueElement} from 'vue'
 
   
 
-  const f = {name:"food",color:"red",icon:"../src/assets/apple.png"}
-  const h ={name:"head",color:"blue",icon:"../src/assets/head_down.png"}
-  const b = {name:"body",color:"blue",icon:"../src/assets/body_horizontal.png"}
-  const t ={name:"tail",color:"blue",icon:"../src/assets/tail_down.png"}  
+  const f = {name:"food",color:"red",icon:"./src/assets/apple.png"}
+  const h ={name:"head",color:"blue",icon:"./src/assets/head_down.png"}
+  const b = {name:"body",color:"blue",icon:"./src/assets/body_horizontal.png"}
+  const t ={name:"tail",color:"blue",icon:"./src/assets/tail_down.png"}  
   
   let area = ref([
   
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
-  ['','',b,'','','','','','',''],
-  ['','','',h,'','','','','',''],
-  ['','','','','','',f,'','',''],
+  ['','','','','','','','','',''],
+  ['','','','','','','','','',''],
+  ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
@@ -23,7 +23,7 @@
 
 ])
 
-let snake = [ {x: 3, y: 3} , {x: 2, y: 2}]
+let snake = [ {x: 4, y: 4} , {x: 3, y: 3}]
 
 
 
@@ -49,6 +49,7 @@ let start = (direction) =>{
 
   let move = (direction) => {
 
+  
   for (let i = 0; i < snake.length; i++) {
 
   let x = snake[i].x
@@ -63,28 +64,26 @@ let start = (direction) =>{
 
   area.value[x+1][y] = temp
   snake[i].x = snake[i].x+1
-  return
+  if(i===snake.length){return}
     
   } 
 
     if(direction === 2){
   area.value[x-1][y] = temp
   snake[0].x = snake[0].x-1
-  return
-  
+  if(i===snake.length){return}
   } 
 
     if(direction === 3){
   area.value[x][y+1] = temp
   snake[0].y = snake[0].y+1
-  return
-  
+  if(i===snake.length){return}
   } 
 
     if(direction === 4){
   area.value[x][y-1] = temp
   snake[0].y = snake[0].y-1
-  return
+  if(i===snake.length){return}
   
     } else{
       alert("invalid direction")
@@ -174,6 +173,6 @@ let start = (direction) =>{
   padding-bottom: 15px;
   
 }
-.icon{
-}
+
+
 </style>
