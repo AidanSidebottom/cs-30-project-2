@@ -1,5 +1,5 @@
 <script setup>
-  import{ref, computed, VueElement} from 'vue'
+  import{ref} from 'vue'
 
   
 
@@ -13,8 +13,8 @@
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
-  ['','','',h,'','','','','',''],
-  ['','','','',h,'','','','',''],
+  ['','','','','','','','','',''],
+  ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
   ['','','','','','','','','',''],
@@ -23,91 +23,54 @@
 
 ])
 
-let snake = [ {x: 4, y: 4} , {x: 3, y: 3}]
+let snake = [ {x: 4, y: 3} , {x: 4, y: 4} , {x: 4, y:5}]
+let fps = 1000/15;
+let gameloop;
 
-let randFood = () =>{
+// let randFood = () =>{
 
-  let x = Math.floor(Math.random()*8)
-  let y = Math.floor(Math.random()*8)
+//   let x = Math.floor(Math.random()*8)
+//   let y = Math.floor(Math.random()*8)
 
-  area.value[x][y]=f
+//   area.value[x][y]=f
 
-}
-
-
-const tiles = (x,y)=>{
-if((x+y)%2==0){
-    return 'white';
-  }
-  else{
-    return 'black';
-  }
-}
+// }
 
 
-
-let started = false
-
-let start = (direction) =>{
-  started=true;
-  move(direction)
-  }
-
-
-  let move = (direction) => {
-    randFood()
-    
-  
-  for (let i = 0; i <= snake.length; i++) {
-  let lastpos = 0;
-  let x = snake[i].x
-  let y = snake[i].y
-
-  let temp = area.value[x][y]
-  area.value[x][y]= ''
-
-    if(i === 0){
-  if(direction === 1){
-  lastpos= area.value[x][y]
-  area.value[x+1][y] = temp
-  snake[i].x = snake[i].x+1
-  
-    
-  } 
-
-    if(direction === 2){
-  lastpos = area.value[x][y]
-  area.value[x-1][y] = temp
-  snake[0].x = snake[0].x-1
-  
-  } 
-
-    if(direction === 3){
-  lastpos= area.value[x][y]
-  area.value[x][y+1] = temp
-  snake[0].y = snake[0].y+1
-  
-  } 
-
-    if(direction === 4){
-  lastpos= area.value[x][y]
-  area.value[x][y-1] = temp
-  snake[0].y = snake[0].y-1
-  
+  const tiles = (x,y)=>{
+  if((x+y)%2==0){
+      return 'white';
     }
-    }else{
-      area[x][y].value = lastpos;
-      if(i===snake.length){return}
+    else{
+      return 'black';
     }
-    
-    } 
   }
 
+
+  // let frame = () => {
+  //  drawBoard()
+  //  drawFood()
+  //  moveSnake()
+  //  drawSnake()
+   
+  //  if(hitWall()||hitSelf()){
+  //   clearInterval(gameloop)
+  //   gameOver();
+  //  }
+
+  // }
+  // gameloop = setInterval(frame(),fps)
+
+  let drawSnake = (snake) =>{
+    snake.forEach((tile)=>{
+      drawSprite(tile.x,tile.y)
+    })
+  }
+
+  let drawSprite = (x,y) => {
+    area.value[x][y] = b
+  }
   
-  
-
-
-
 </script>
 
 <template>
@@ -136,18 +99,11 @@ let start = (direction) =>{
         </div>
       </div>
     </main>
-    <button v-on:click=start(1)>
-      right
+    <button v-on:click=drawSnake(snake)>
+      drawSnake
     </button>
-    <button v-on:click=start(2)>
-      left
-    </button>
-    <button v-on:click=start(3)>
-      down
-    </button>
-    <button v-on:click=start(4)>
-      up
-    </button>
+    
+   
 </template>
 
 <style scoped>
